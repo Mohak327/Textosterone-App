@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import TinderCard from 'react-tinder-card'
 import './TinderCards.css'
+import database from '../firebase'
 
 function TinderCards() {
 
@@ -14,18 +15,32 @@ function TinderCards() {
 // ...people(spread operator) means keep the existing values in that state and append the following values to the state as well.
 // setPeople([...people, 'Mohak', 'Aniket'])
 
-const [people, setPeople] = useState([
-	{
-		name: 'Akansha',
-		url: 'https://images.unsplash.com/photo-1540076156429-35ffe82b7870?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80'
-	},{
-		name: 'Tripti',
-		url: 'https://images.unsplash.com/photo-1600618528240-fb9fc964b853?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
-	},{
-		name: 'Drishti',
-		url: 'https://images.unsplash.com/photo-1494869042583-f6c911f04b4c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
-	},
-])
+const [people, setPeople] = useState([])
+
+// {
+// 		name: 'Akansha',
+// 		url: 'https://images.unsplash.com/photo-1540076156429-35ffe82b7870?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80'
+// 	},{
+// 		name: 'Tripti',
+// 		url: 'https://images.unsplash.com/photo-1600618528240-fb9fc964b853?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+// 	},{
+// 		name: 'Drishti',
+// 		url: 'https://images.unsplash.com/photo-1494869042583-f6c911f04b4c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+// 	},
+
+useEffect(() => {
+	const unsubscribe = database
+		.collection('people')
+		.onSnapshot(snapshot =>
+			setPeople(snapshot.docs.map(doc => doc.data()))
+		)
+
+	return() => {
+		unsubscribe()
+	}
+
+}, [people] // This will run once when the component loads, and never again.
+)
 
 const swiped = (direction, nameToDelete) => {
 	console.log('removing: ' + nameToDelete)
