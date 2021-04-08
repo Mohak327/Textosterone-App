@@ -25,7 +25,7 @@
     height: 100%;
 }
 
-.card > h3{
+.card > h1{
     position: absolute;
     bottom: 10px;
     /* margin: 10px; */

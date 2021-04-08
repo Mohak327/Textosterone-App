@@ -9,17 +9,19 @@ function App() {
   return (
 
     <div className="App">
-      <Header />
       <Router>
+	  	<Header />
 		<Switch>
-			<Route path='/chat'><h1>Chats Page</h1></Route>
+			<Route path='/chats'><h1>Chats Page</h1></Route>
+
 			<Route path='/cards'>
-        <h1><TinderCards/></h1>
-        <SwipeButtons/>
-      </Route>
+				<TinderCards />
+				<SwipeButtons />
+      		</Route>
 
 			{/* This default route 👇 is to be placed at bottom. */}
 			<Route path='/'><h1>Homepage</h1></Route>
+
 		</Switch>
       </Router>
     </div>
