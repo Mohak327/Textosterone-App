@@ -20,7 +20,7 @@ useEffect(() => {
 		unsubscribe()
 	}
 
-}, [people] // This will run once when the component loads, and never again.
+}, [] // This will run once when the component loads, and never again.
 )
 
 const swiped = (direction, nameToDelete) => {

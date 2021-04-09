@@ -4,19 +4,26 @@ import PersonIcon from '@material-ui/icons/Person'
 import ForumIcon from '@material-ui/icons/Forum'
 // Only for ripple effect.
 import IconButton from '@material-ui/core/IconButton'
-import {Link} from 'react-router-dom'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import {Link, useHistory} from 'react-router-dom'
 
-function Header() {
+function Header({backButton}) {
+    const history = useHistory()
     return (
         <div className="header">
-            <Link to='/cards'>
-                <IconButton>
-                    <PersonIcon className="header__icon" fontSize = "large"/>
-                </IconButton>
-            </Link>
+            {backButton ? (
+                    <IconButton onClick={() => history.replace(backButton)}>
+                        <ArrowBackIosIcon className="header__icon" fontSize = "large"/>
+                    </IconButton>
+            ) : (
+                <Link to='/cards'>
+                    <IconButton>
+                        <PersonIcon className="header__icon" fontSize = "large"/>
+                    </IconButton>
+                </Link>
+            )}
 
-
-            <Link to='/home'>
+            <Link to='/'>
                 <img
                     className="header__logo"
                     src="https://cdn.worldvectorlogo.com/logos/tinder-2.svg"
